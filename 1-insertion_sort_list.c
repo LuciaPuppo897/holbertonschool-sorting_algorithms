@@ -6,44 +6,50 @@
 */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *curr = *list, *tmp, *previous;
+	listint_t *curr, *tmp, *previous;
 
-	if (!list)
-		return;
-	while (curr)
+	if (!list || !*list)
 	{
-		tmp = curr,	previous = tmp->prev;
-		if (previous)
+		exit(1);
+	}
+	else
+	{
+		curr = *list;
+		while (curr)
 		{
-			if (previous->prev && previous->n > curr->n)
+			tmp = curr,	previous = tmp->prev;
+			if (previous)
 			{
-				tmp->prev = previous->prev,	previous->next = tmp->next;
-				if (tmp->next)
-					tmp->next->prev = previous;
-				previous->prev->next = tmp,	previous->prev = tmp;
-				tmp->next = previous, print_list(*list);
+				if (previous->prev && previous->n > curr->n)
+				{
+					tmp->prev = previous->prev,	previous->next = tmp->next;
+					if (tmp->next)
+						tmp->next->prev = previous;
+					previous->prev->next = tmp,	previous->prev = tmp;
+					tmp->next = previous, print_list(*list);
+				}
+				else if (previous->n > tmp->n)
+				{
+					tmp->prev = NULL;
+					if (tmp->next)
+						previous->next = tmp->next;
+					else
+						previous->next = NULL;
+					if (tmp->next)
+						tmp->next->prev = previous;
+					previous->prev = tmp;
+					tmp->next = previous, *list = tmp, print_list(*list);
+				}
 			}
-			else if (previous->n > tmp->n)
+			if (tmp->prev)
 			{
-				tmp->prev = NULL;
-				if (tmp->next)
-					previous->next = tmp->next;
+				if (tmp->prev->n > tmp->n)
+					;
 				else
-					previous->next = NULL;
-				if (tmp->next)
-					tmp->next->prev = previous;
-				previous->prev = tmp;
-				tmp->next = previous, *list = tmp, print_list(*list);
+					curr = curr->next;
 			}
-		}
-		if (tmp->prev)
-		{
-			if (tmp->prev->n > tmp->n)
-				;
 			else
 				curr = curr->next;
 		}
-		else
-			curr = curr->next;
 	}
 }
