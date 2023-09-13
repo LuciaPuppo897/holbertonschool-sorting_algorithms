@@ -25,6 +25,6 @@ void quick_sort(int *array, size_t size);
 void print_array(const int *array, size_t size);
 void print_list(const listint_t *list);
 void recursive_quick (int *array, int min, int max, size_t size);
-void swap(int *a, int *b);
+void swap(int *a, int *b, int i, int j, int *array, size_t size);
 
 #endif
